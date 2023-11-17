@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spy Chat</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <h1>secret agent chat</h1>
+    <div id="messages"></div>
+    <form id="form">
+        <input id="input" autocomplete="off" autofocus />
+        <button>Send</button>
+    </form>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        const messages = document.getElementById('messages');
+        const form = document.getElementById('form');
+        const input = document.getElementById('input');
+        let username;
+
+        while (!username) {
+            username = prompt('Enter your spy username:');
+        }
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (input.value) {
+                socket.emit('chat message', { username, message: input.value });
+                input.value = '';
+            }
+        });
+
+        socket.on('chat message', (data) => {
+            const { username, message } = data;
+            const item = document.createElement('li');
+            item.textContent = `${username}: ${message}`;
+            messages.appendChild(item);
+
+            // Auto-scroll to the bottom with a delay
+            requestAnimationFrame(() => {
+            messages.scrollTop = messages.scrollHeight;
+        });
+        });
+    </script>
+</body>
+
+</html>
