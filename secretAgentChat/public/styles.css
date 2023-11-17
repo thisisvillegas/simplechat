@@ -35,6 +35,7 @@ h1 {
     flex-direction: row;
     align-items: center;
     padding-left: 10px;
+    padding-bottom: 10px;
 }
 
 #input {
@@ -60,3 +61,37 @@ button:hover {
     background-color: #45a049;
 }
 
+#clearChat {
+    margin-left: 5px; /* Add some space between the Send and Clear buttons */
+    padding: 8px;
+    border: none;
+    border-radius: 3px;
+    background-color: #f44336; /* Red color for danger */
+    color: #fff;
+    cursor: pointer;
+}
+
+#clearChat:hover {
+    background-color: #d32f2f; /* Darker red on hover */
+}
+
+
+.modal-content {
+    background-color: #333 !important; /* Override Bootstrap background color */
+    color: #fff !important; /* Override Bootstrap text color */
+    border: 1px solid #555;
+}
+
+.modal-header {
+    background-color: #333 !important; /* Override Bootstrap header background color */
+    border-bottom: 1px solid #555;
+    color: #fff !important; /* Override Bootstrap header text color */
+}
+
+.modal-title {
+    color: #4CAF50 !important; /* Override Bootstrap title text color */
+}
+
+.modal-body {
+    padding: 20px;
+}
