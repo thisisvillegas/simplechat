@@ -49,15 +49,38 @@
         const input = document.getElementById('input');
         const clearChatButton = document.getElementById('clearChat');
         let username;
+        let room;
 
         while (!username) {
             username = prompt('Enter your spy username:');
         }
 
+        while (!room) {
+            room = prompt('Enter the room name:');
+        }
+
+        // Join the room
+        socket.emit('join room', room);
+
+        socket.on('previous messages', (previousMessages) => {
+            previousMessages.forEach((msg) => {
+                const { username, message } = msg;
+                const item = document.createElement('li');
+                item.textContent = `${username}: ${message}`;
+                messages.appendChild(item);
+            });
+
+            // Auto-scroll to the bottom with a delay
+            requestAnimationFrame(() => {
+                messages.scrollTop = messages.scrollHeight;
+            });
+        }); 
+
         form.addEventListener('submit', (e) => {
             e.preventDefault();
             if (input.value) {
-                socket.emit('chat message', { username, message: input.value });
+                // Send the message along with the room name
+                socket.emit('chat message', { room, username, message: input.value });
                 input.value = '';
             }
         });
